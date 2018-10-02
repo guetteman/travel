@@ -1,34 +1,44 @@
-import React from 'react'; 
-import { View, Image, Text, Button, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component } from 'react'; 
+import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { deletePlace } from '../../store/actions';
 
-const placeDetail = props => {
-    return (
-        <View style={styles.container}>
-            <View>
-                <Image 
-                    source={props.selectedPlace.image} 
-                    style={styles.image}
-                />
-                <Text style={styles.name}>{props.selectedPlace.name}</Text>
-            </View>
-            <View>
-                <View style={styles.deleteButtonContainer}>
-                    <TouchableOpacity onPress={props.onItemDeleted}>
-                        <View style={styles.deleteButton}>
-                            <Icon 
-                                size={20} 
-                                name="trash"
-                                color="white"
-                            />
-                            <Text style={styles.deleteButtonText} >Delete</Text>
-                        </View>
-                    </TouchableOpacity>
+class PlaceDetail extends Component {
+    
+    placeDeletedHandler = () => {
+        this.props.onDeletePlace(this.props.selectedPlace.key);
+        this.props.navigator.pop();
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View>
+                    <Image 
+                        source={this.props.selectedPlace.image} 
+                        style={styles.image}
+                    />
+                    <Text style={styles.name}>{this.props.selectedPlace.name}</Text>
+                </View>
+                <View>
+                    <View style={styles.deleteButtonContainer}>
+                        <TouchableOpacity onPress={this.placeDeletedHandler}>
+                            <View style={styles.deleteButton}>
+                                <Icon 
+                                    size={20} 
+                                    name="trash"
+                                    color="white"
+                                />
+                                <Text style={styles.deleteButtonText} >Delete</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-        </View>
-    );
+        );
+    };
 };
 
 const styles = StyleSheet.create({
@@ -63,6 +73,12 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 20
     }
-}); 
+});
 
-export default placeDetail;
+const mapDispatchToProps = dispatch => {
+    return {
+        onDeletePlace: (key) => dispatch(deletePlace(key))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(PlaceDetail);
