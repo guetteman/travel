@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
+import DefaultInput from '../UI/DefaultInput/DefaultInput';
+
 export default class AddPlace extends React.Component {
     constructor(props) {
         super(props)
@@ -27,13 +29,10 @@ export default class AddPlace extends React.Component {
     render() {
         return (
             <View style={styles.inputContainer}>
-                <TextInput  
-                    style={styles.textInput}
+                <DefaultInput  
                     value={this.state.placeName} 
                     onChangeText={this.placeNameChangedHandler}
-                    underlineColorAndroid="transparent"
                     placeholder="An Awesome Place"
-                    placeholderTextColor="#90A4AE"
                 /> 
                 <Button 
                     style={styles.button}
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center"
     },
-        textInput: { 
+    textInput: { 
         width: "80%",
         backgroundColor: '#F5F5F5', 
         borderRadius:30, 
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15
     },
-        button: {
+    button: {
         width: "20%",
     },
 });
