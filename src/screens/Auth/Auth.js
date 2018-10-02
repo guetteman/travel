@@ -4,6 +4,7 @@ import { View, Button, ImageBackground, StyleSheet } from 'react-native';
 import startMainTabs from '../MainTabs/startMainTabs';
 import HeadingText from '../../components/UI/HeadingText/HeadingText'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
+import DefaultButton from '../../components/UI/DefaultButton/DefaultButton';
 
 import backgroundImage from '../../assets/background.jpg';
 
@@ -17,7 +18,9 @@ class AuthScreen extends Component {
             <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
                 <View style={styles.container}>
                         <HeadingText>Please Log In</HeadingText>
-                        <Button title="Switch to Login" />
+                        <View style={styles.buttonContainer}>
+                            <DefaultButton color="#0288D1">Switch to Login</DefaultButton>
+                        </View>
                         <View style={styles.inputContainer} >
                             <DefaultInput placeholder="Your E-Mail Address" />
                         </View>
@@ -27,7 +30,9 @@ class AuthScreen extends Component {
                         <View style={styles.inputContainer} >
                             <DefaultInput placeholder="Confirm Password" />
                         </View>
-                        <Button title="Login" onPress={this.loginHandler} />
+                        <View style={styles.buttonContainer}>
+                            <DefaultButton color="#0288D1" onPress={this.loginHandler}>Login</DefaultButton>
+                        </View>
                 </View>
             </ImageBackground>
         );
@@ -48,6 +53,9 @@ const styles = StyleSheet.create({
     inputContainer: {
         marginTop: 10,
         width: "80%"
+    },
+    buttonContainer: {
+        marginTop: 10
     }
 })
 
