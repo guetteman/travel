@@ -5,10 +5,25 @@ import { connect } from 'react-redux';
 import PlaceList from '../../components/List/List';
 
 class FindPlaceScreen extends Component {
+    onItemSelectedHandle = key => {
+        const selectedPlace = this.props.places.find(place => place.key === key);
+
+        this.props.navigator.push({
+            screen: "travel.PlaceDetailScreen",
+            title: selectedPlace.name,
+            passProps: {
+                selectedPlace: selectedPlace
+            }
+        });
+    }
+
     render() {
         return (
             <View>
-                <PlaceList items={this.props.places} />
+                <PlaceList 
+                    items={this.props.places} 
+                    onItemSelected={this.onItemSelectedHandle}
+                />
             </View>
         );
     }
