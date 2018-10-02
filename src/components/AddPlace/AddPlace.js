@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-
 export default class AddPlace extends React.Component {
     constructor(props) {
         super(props)
@@ -22,7 +21,7 @@ export default class AddPlace extends React.Component {
             return;
         }
 
-        this.props.add(this.state.placeName);
+        this.props.onPlaceAdded(this.state.placeName);
     };
 
     render() {
