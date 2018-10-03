@@ -11,7 +11,30 @@ import backgroundImage from '../../assets/background.jpg';
 class AuthScreen extends Component {
     
     state = {
-        viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape"
+        viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
+        controls: {
+            email: {
+                value: "",
+                valid: false,
+                validationRules: {
+                    isEmail: true
+                }
+            },
+            password: {
+                value: "",
+                valid: false,
+                validationRules: {
+                    minLength: 6
+                }
+            },
+            confirmPassword: {
+                value: "",
+                valid: false,
+                validationRules: {
+                    equalTo: "password"
+                }
+            }
+        }
     }
     
     constructor(props) {
@@ -34,6 +57,20 @@ class AuthScreen extends Component {
         startMainTabs();
     }
 
+    updateInputState = (key, value) => {
+        this.setState(prevState => {
+            return {
+                controls: {
+                    ...prevState.controls,
+                    [key]:{
+                        ...prevState.controls[key],
+                        value: value
+                    }
+                }
+            }
+        })
+    }
+
     render () {
         let headingText = null;
 
@@ -51,7 +88,11 @@ class AuthScreen extends Component {
                             <DefaultButton color="#0288D1">Switch to Login</DefaultButton>
                         </View>
                         <View style={styles.inputContainer} >
-                            <DefaultInput placeholder="Your E-Mail Address" />
+                            <DefaultInput 
+                                placeholder="Your E-Mail Address" 
+                                value={this.state.controls.email.value}
+                                onChangeText={(value) => {this.updateInputState('email', value)}}
+                            />
                         </View>
                         <View 
                             style={
@@ -67,10 +108,18 @@ class AuthScreen extends Component {
                                     : styles.landscapePasswordWrapper
                                 } 
                             >
-                                <DefaultInput placeholder="Password" />
+                                <DefaultInput 
+                                    placeholder="Password" 
+                                    value={this.state.controls.password.value}
+                                    onChangeText={(value) => {this.updateInputState('password', value)}}
+                                />
                             </View>
                             <View style={this.state.viewMode === "portrait" ? styles.portraitPasswordWrapper : styles.landscapePasswordWrapper} >
-                                <DefaultInput placeholder="Confirm Password" />
+                                <DefaultInput 
+                                    placeholder="Confirm Password" 
+                                    value={this.state.controls.confirmPassword.value}
+                                    onChangeText={(value) => {this.updateInputState('confirmPassword', value)}}
+                                />
                             </View>
                         </View>
                         <View style={styles.buttonContainer}>
