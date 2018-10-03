@@ -8,7 +8,8 @@ class FindPlaceScreen extends Component {
 
     state = {
         placesLoaded: false,
-        removeAnimation: new Animated.Value(1)
+        removeAnimation: new Animated.Value(1),
+        showListAnimation: new Animated.Value(0)
     }
 
     constructor(props) {
@@ -27,12 +28,26 @@ class FindPlaceScreen extends Component {
         }
     }
 
+    placesLoadedHandler = () => {
+        Animated.timing(this.state.showListAnimation, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true
+        }).start();
+    }
+
     placesSearchHandler = () => {
         Animated.timing(this.state.removeAnimation, {
             toValue: 0,
             duration: 500,
             useNativeDriver: true
-        }).start();
+        }).start(() => {
+            this.setState({
+                placesLoaded: true
+            });
+
+            this.placesLoadedHandler();
+        });
     }
 
     onItemSelectedHandle = key => {
@@ -72,10 +87,16 @@ class FindPlaceScreen extends Component {
 
         if (this.state.placesLoaded) {
             content = (
-                <PlaceList 
-                    items={this.props.places} 
-                    onItemSelected={this.onItemSelectedHandle}
-                />
+                <Animated.View
+                    style={{
+                        opacity: this.state.showListAnimation,
+                    }}
+                >
+                    <PlaceList 
+                        items={this.props.places} 
+                        onItemSelected={this.onItemSelectedHandle}
+                    />
+                </Animated.View>
             );
         }
 
