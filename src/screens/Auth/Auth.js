@@ -143,6 +143,7 @@ class AuthScreen extends Component {
                     } >
                     <DefaultInput 
                         placeholder="Confirm Password" 
+                        secureTextEntry
                         value={this.state.controls.confirmPassword.value}
                         onChangeText={(value) => {this.updateInputState('confirmPassword', value)}}
                         valid={this.state.controls.confirmPassword.valid}
@@ -167,6 +168,9 @@ class AuthScreen extends Component {
                         <View style={styles.inputContainer} >
                             <DefaultInput 
                                 placeholder="Your E-Mail Address" 
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                keyboardType="email-address"
                                 value={this.state.controls.email.value}
                                 onChangeText={(value) => {this.updateInputState('email', value)}}
                                 valid={this.state.controls.email.valid}
@@ -189,6 +193,7 @@ class AuthScreen extends Component {
                             >
                                 <DefaultInput 
                                     placeholder="Password" 
+                                    secureTextEntry
                                     value={this.state.controls.password.value}
                                     onChangeText={(value) => {this.updateInputState('password', value)}}
                                     valid={this.state.controls.password.valid}
