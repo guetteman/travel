@@ -3,10 +3,20 @@ import { Text, TouchableOpacity, TouchableNativeFeedback, Platform, View, StyleS
 
 const defaultButton = props => {
     const content = (
-        <View style={[styles.button, {backgroundColor: props.color}]}>
-            <Text style={styles.buttonText}>{props.children}</Text>
+        <View style=
+            {[
+                styles.button, 
+                {backgroundColor: props.color}, 
+                props.disabled ? styles.disabled : null
+            ]}
+        >
+            <Text style={props.disabled ? styles.disabledText : styles.buttonText}>{props.children}</Text>
         </View>
     );
+
+    if (props.disabled) {
+        return content;
+    }
 
     if (Platform.OS === "android") {
         return (
@@ -37,6 +47,12 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "white",
         fontSize: 15
+    },
+    disabled: {
+        backgroundColor: "#F5F5F5"
+    },
+    disabledText: {
+        color: "#90A4AE"
     }
 });
 
